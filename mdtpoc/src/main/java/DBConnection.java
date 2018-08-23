@@ -4,25 +4,7 @@ import java.sql.*;
 public class DBConnection {
 
     public static void main(String [] args) throws Exception{
-        //Process proc = Runtime.getRuntime().exec("/home/mdt-worker/echo-hello.sh");
-        //System.out.println(proc);
-
-        //String[] cmd = { "bash", "echo-hello.sh", "/home/mdt-worker"};
-        //Runtime.getRuntime().exec(cmd);
-
-//        ProcessBuilder pb = new ProcessBuilder("/home/mdt-worker/echo-hello.sh");
-//        try {
-//            Process p;
-//            p = pb.start();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-
-//
-
-      /*  String[] cmdScript = new String[]{"/bin/bash", "/home/mdt-worker/echo-hello.sh"};
-        Process procScript = Runtime.getRuntime().exec(cmdScript);*/
-
+        System.out.println("8888888888888888888888888888888888888");
 
         PreparedStatement ps = null;
         Statement stmt = null;
@@ -35,8 +17,8 @@ public class DBConnection {
             ps = con.prepareStatement("insert into parameters values(?,?)");
             stmt = con.createStatement();
             int runid = 1;
-            String primScript = "/home/mdt-worker/Downloads/scripts/uov_prim_";
-            String testScript = "/home/mdt-worker/Downloads/scripts/uov_test_";
+            String primScript = "./uov_prim_";
+            String testScript = "./uov_test_";
 
             rs = stmt.executeQuery("select * from tr_details where runid = "+runid);
             while(rs.next()){
@@ -51,14 +33,20 @@ public class DBConnection {
                         triggerScript(primScript);
                         //System.out.print(primScript);
                         testScript = testScript + runid + "_" + s + ".sh";
+
+                        Thread.sleep(30000);
                         triggerScript(testScript);
                        // System.out.print(i+"  ");
+                        Thread.sleep(30000);
                     }
                 }
             }
             con.close();
         } catch(Exception e) {
             System.out.println(e);
+        }
+        finally {
+            System.out.println("8888888888888888888888888888888888888");
         }
     }
 
